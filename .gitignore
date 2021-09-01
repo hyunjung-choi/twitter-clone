@@ -109,3 +109,5 @@ lint/tmp/
 
 # Maven
 target/
+
+./app/google-services.json
