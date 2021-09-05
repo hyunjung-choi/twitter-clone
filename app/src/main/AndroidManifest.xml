@@ -10,7 +10,11 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.TwitterClone">
-        <activity android:name=".HomeActivity"></activity>
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TwitterClone"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
