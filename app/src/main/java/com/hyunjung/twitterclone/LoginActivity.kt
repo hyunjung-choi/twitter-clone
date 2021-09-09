@@ -80,7 +80,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun goToSignup(v: View) {
-        Toast.makeText(this, "goToSignup", Toast.LENGTH_SHORT).show()
+        startActivity(SignupActivity.newIntent(this))
+        finish()
     }
 
     override fun onStart() {
