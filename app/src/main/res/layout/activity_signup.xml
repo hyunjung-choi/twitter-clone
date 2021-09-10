@@ -25,7 +25,7 @@
                 android:src="@drawable/title" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/usernamelTIL"
+                android:id="@+id/usernameTIL"
                 android:layout_width="@dimen/standard_width"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView"
@@ -52,7 +52,7 @@
                 android:id="@+id/emailTIL"
                 android:layout_width="@dimen/standard_width"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/usernamelTIL"
+                android:layout_below="@id/usernameTIL"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="@dimen/grid_2x"
                 android:layout_marginTop="@dimen/grid_2x"
