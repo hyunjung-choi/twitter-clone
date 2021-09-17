@@ -1,4 +1,4 @@
-package com.hyunjung.twitterclone
+package com.hyunjung.twitterclone.activities
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
+import com.hyunjung.twitterclone.R
 
 class HomeActivity : AppCompatActivity() {
 
