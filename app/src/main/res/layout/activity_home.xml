@@ -69,19 +69,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/logoutButton"
-        style="@style/StandardButton"
-        android:layout_width="@dimen/standard_width"
-        android:layout_height="@dimen/standard_height"
-        android:layout_marginTop="112dp"
-        android:onClick="onLogout"
-        android:text="@string/button_logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
@@ -93,19 +80,16 @@
         app:tabIndicator="@null">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/selector_home" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/selector_search" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabMyActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/selector_myactivity" />
@@ -113,7 +97,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
