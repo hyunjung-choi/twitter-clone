@@ -2,7 +2,7 @@
 
 <p align="center"><b>2021.09 ~</b></p>
 <p align="center"><b>Firebase</b>를 이용한 트위터 클론 프로젝트</p>
-<p align="center">Login, Logout, Signup 구현 완료</br>Main screen 구현 중!</p>
+<p align="center">Login, Logout, Signup, Main screen 구현 완료</p>
 
 ## ScreenShots
 <p>
