@@ -1,4 +1,4 @@
-package com.hyunjung.twitterclone
+package com.hyunjung.twitterclone.activities
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,11 +12,15 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.hyunjung.twitterclone.databinding.ActivityLoginBinding
+import com.google.firebase.firestore.FirebaseFirestore
+import com.hyunjung.twitterclone.databinding.ActivitySignupBinding
+import com.hyunjung.twitterclone.util.DATA_USERS
+import com.hyunjung.twitterclone.util.User
 
-class LoginActivity : AppCompatActivity() {
+class SignupActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: ActivitySignupBinding
+    private val firebaseDB = FirebaseFirestore.getInstance()
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firebaseAuthListener = FirebaseAuth.AuthStateListener {
         val user = firebaseAuth.currentUser?.uid
@@ -29,14 +33,15 @@ class LoginActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setTextChangeListener(binding.usernameET, binding.usernameTIL)
         setTextChangeListener(binding.emailET, binding.emailTIL)
         setTextChangeListener(binding.passwordET, binding.passwordTIL)
 
         // ProgressBar가 떠있는 동안 touch 안되게 막아놓는 역할
-        binding.loginProgressLayout.setOnTouchListener{ v, event -> true }
+        binding.signupProgressLayout.setOnTouchListener{ v, event -> true }
     }
 
     private fun setTextChangeListener(et: EditText, til: TextInputLayout) {
@@ -51,8 +56,13 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    fun onLogin(v: View) {
+    fun onSignup(v: View) {
         var proceed = true
+        if (binding.usernameET.text.isNullOrBlank()) {
+            binding.usernameTIL.error = "Username is required"
+            binding.usernameTIL.isErrorEnabled = true
+            proceed = false
+        }
         if (binding.emailET.text.isNullOrBlank()) {
             binding.emailTIL.error = "Email is required"
             binding.emailTIL.isErrorEnabled = true
@@ -64,23 +74,29 @@ class LoginActivity : AppCompatActivity() {
             proceed = false
         }
         if (proceed) {
-            binding.loginProgressLayout.visibility = View.VISIBLE
-            firebaseAuth.signInWithEmailAndPassword(binding.emailET.text.toString(), binding.passwordET.text.toString())
+            binding.signupProgressLayout.visibility = View.VISIBLE
+            firebaseAuth.createUserWithEmailAndPassword(binding.emailET.text.toString(), binding.passwordET.text.toString())
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
-                        binding.loginProgressLayout.visibility = View.GONE
-                        Toast.makeText(this, "Login error: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Signup error: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val email = binding.emailET.text.toString()
+                        val name = binding.usernameET.text.toString()
+                        val user = User(email, name, "", arrayListOf(), arrayListOf())
+                        firebaseDB.collection(DATA_USERS).document(firebaseAuth.uid!!).set(user) // user 파이어베이스 DB 생성
                     }
+                    binding.signupProgressLayout.visibility = View.GONE
                 }
                 .addOnFailureListener { e ->
                     e.printStackTrace()
-                    binding.loginProgressLayout.visibility = View.GONE
+                    binding.signupProgressLayout.visibility = View.GONE
                 }
         }
+
     }
 
-    fun goToSignup(v: View) {
-        startActivity(SignupActivity.newIntent(this))
+    fun goToLogin(v: View) {
+        startActivity(LoginActivity.newIntent(this))
         finish()
     }
 
@@ -95,6 +111,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context) = Intent(context, LoginActivity::class.java)
+        fun newIntent(context: Context) = Intent(context, SignupActivity::class.java)
     }
 }
